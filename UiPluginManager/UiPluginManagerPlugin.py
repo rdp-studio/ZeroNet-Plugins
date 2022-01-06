@@ -85,7 +85,7 @@ class UiWebsocketPlugin(object):
                 plugin["info"] = plugin_info
 
             if plugin["source"] != "builtin":
-                plugin_site = self.server.getSites().get(plugin["source"])
+                plugin_site = self.server.sites.get(plugin["source"])
                 if plugin_site:
                     try:
                         plugin_site_info = plugin_site.storage.loadJson(plugin["inner_path"] + "/plugin_info.json")

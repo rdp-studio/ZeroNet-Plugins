@@ -265,7 +265,7 @@ class SiteStoragePlugin(object):
             return
 
         merged_sites = [
-            site_manager.getSites()[address]
+            site_manager.sites[address]
             for address, merged_type in merged_db.items()
             if merged_type in merger_types
         ]
