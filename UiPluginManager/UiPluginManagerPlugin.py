@@ -128,7 +128,7 @@ class UiWebsocketPlugin(object):
         return "ok"
 
     def pluginAction(self, action, address, inner_path):
-        site = self.server.getSites().get(address)
+        site = self.server.sites.get(address)
         plugin_manager = PluginManager.plugin_manager
 
         # Install/update path should exists
