@@ -373,7 +373,7 @@ class SiteManagerPlugin(object):
                 if site.address not in merger_db_new:
                     merger_db_new[site.address] = []
                 merger_db_new[site.address].append(merger_type)
-                site_manager.getSites()[site.address] = site
+                site_manager.sites[site.address] = site
 
             # Update merged to merger
             if merged_type:
