@@ -50,7 +50,7 @@ class UiWebsocketPlugin(object):
         global bigfile_sha512_cache
 
         content_db = self.site.content_manager.contents.db
-        site = content_db.getSites()[row["address"]]
+        site = content_db.sites[row["address"]]
         if not site.settings.get("has_bigfile"):
             return False
 

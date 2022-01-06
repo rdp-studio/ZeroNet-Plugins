@@ -750,7 +750,7 @@ class UiWebsocketPlugin(object):
     def actionSiteRecoverPrivatekey(self, to):
         from Crypt import CryptBitcoin
 
-        site_data = self.user.getSites()[self.site.address]
+        site_data = self.user.sites[self.site.address]
         if site_data.get("privatekey"):
             return {"error": "This site already has saved privated key"}
 
@@ -772,7 +772,7 @@ class UiWebsocketPlugin(object):
     @flag.admin
     @flag.no_multiuser
     def actionUserSetSitePrivatekey(self, to, privatekey):
-        site_data = self.user.getSites()[self.site.address]
+        site_data = self.user.sites[self.site.address]
         site_data["privatekey"] = privatekey
         self.site.updateWebsocket(set_privatekey=bool(privatekey))
         self.user.save()
