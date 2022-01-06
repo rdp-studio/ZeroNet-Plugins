@@ -136,7 +136,7 @@ class UiWebsocketPlugin(object):
         if address:
             if "ADMIN" not in self.getPermissions(to):
                 return self.response(to, {"error": "Forbidden: Only ADMIN sites can manage different site include"})
-            site = self.server.sites[address]
+            site = self.server.getSites()[address]
         else:
             address = self.site.address
             site = self.site

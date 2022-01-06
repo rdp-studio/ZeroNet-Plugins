@@ -85,7 +85,7 @@ class UiWebsocketPlugin(object):
                 plugin["info"] = plugin_info
 
             if plugin["source"] != "builtin":
-                plugin_site = self.server.sites.get(plugin["source"])
+                plugin_site = self.server.getSites().get(plugin["source"])
                 if plugin_site:
                     try:
                         plugin_site_info = plugin_site.storage.loadJson(plugin["inner_path"] + "/plugin_info.json")
@@ -128,7 +128,7 @@ class UiWebsocketPlugin(object):
         return "ok"
 
     def pluginAction(self, action, address, inner_path):
-        site = self.server.sites.get(address)
+        site = self.server.getSites().get(address)
         plugin_manager = PluginManager.plugin_manager
 
         # Install/update path should exists

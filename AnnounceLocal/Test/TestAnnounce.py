@@ -11,7 +11,7 @@ from Test import Spy
 
 @pytest.fixture
 def announcer(file_server, site):
-    file_server.sites[site.address] = site
+    file_server.getSites()[site.address] = site
     announcer = AnnounceLocalPlugin.LocalAnnouncer(file_server, listen_port=1100)
     file_server.local_announcer = announcer
     announcer.listen_port = 1100
@@ -27,7 +27,7 @@ def announcer(file_server, site):
 @pytest.fixture
 def announcer_remote(request, site_temp):
     file_server_remote = FileServer("127.0.0.1", 1545)
-    file_server_remote.sites[site_temp.address] = site_temp
+    file_server_remote.getSites()[site_temp.address] = site_temp
     announcer = AnnounceLocalPlugin.LocalAnnouncer(file_server_remote, listen_port=1101)
     file_server_remote.local_announcer = announcer
     announcer.listen_port = 1101
@@ -85,10 +85,10 @@ class TestAnnounce:
 
     def testPeerDiscover(self, announcer, announcer_remote, site):
         assert announcer.server.peer_id != announcer_remote.server.peer_id
-        assert len(list(announcer.server.sites.values())[0].peers) == 0
+        assert len(list(announcer.server.getSites().values())[0].peers) == 0
         announcer.broadcast({"cmd": "discoverRequest"}, port=announcer_remote.listen_port)
         time.sleep(0.1)
-        assert len(list(announcer.server.sites.values())[0].peers) == 1
+        assert len(list(announcer.server.getSites().values())[0].peers) == 1
 
     def testRecentPeerList(self, announcer, announcer_remote, site):
         assert len(site.peers_recent) == 0

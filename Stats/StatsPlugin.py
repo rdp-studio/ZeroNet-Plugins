@@ -166,7 +166,7 @@ class UiRequestPlugin(object):
         yield "<br><br><b>Sites</b>:"
         yield "<table>"
         yield "<tr><th>address</th> <th>connected</th> <th title='connected/good/total'>peers</th> <th>content.json</th> <th>out</th> <th>in</th>  </tr>"
-        for site in list(self.server.sites.values()):
+        for site in list(self.server.getSites().values()):
             yield self.formatTableRow([
                 (
                     """<a href='#' onclick='document.getElementById("peers_%s").style.display="initial"; return false'>%s</a>""",
@@ -204,7 +204,7 @@ class UiRequestPlugin(object):
 
     def renderBigfiles(self):
         yield "<br><br><b>Big files</b>:<br>"
-        for site in list(self.server.sites.values()):
+        for site in list(self.server.getSites().values()):
             if not site.settings.get("has_bigfile"):
                 continue
             bigfiles = {}

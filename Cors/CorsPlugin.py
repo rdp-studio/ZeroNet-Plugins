@@ -48,7 +48,7 @@ class UiWebsocketPlugin(object):
             cors_address, cors_inner_path = getCorsPath(self.site, inner_path)
 
             req_self = copy.copy(self)
-            req_self.site = self.server.sites.get(cors_address)  # Change the site to the merged one
+            req_self.site = self.server.getSites().get(cors_address)  # Change the site to the merged one
             if not req_self.site:
                 return {"error": "No site found"}
 
@@ -84,7 +84,7 @@ class UiWebsocketPlugin(object):
         site_names = []
         site_addresses = []
         for address in addresses:
-            site = self.server.sites.get(address)
+            site = self.server.getSites().get(address)
             if site:
                 site_name = site.content_manager.contents.get("content.json", {}).get("title", address)
             else:
@@ -119,7 +119,7 @@ class UiWebsocketPlugin(object):
         self.response(to, "ok")
 
         for address in addresses:
-            site = self.server.sites.get(address)
+            site = self.server.getSites().get(address)
             if not site:
                 gevent.spawn(self.server.site_manager.need, address)
 
@@ -131,7 +131,7 @@ class UiRequestPlugin(object):
         path_parts = super(UiRequestPlugin, self).parsePath(path)
         if "cors-" not in path:  # Optimization
             return path_parts
-        site = self.server.sites[path_parts["address"]]
+        site = self.server.getSites()[path_parts["address"]]
         try:
             path_parts["address"], path_parts["inner_path"] = getCorsPath(site, path_parts["inner_path"])
         except Exception:

@@ -95,9 +95,9 @@ class TestBigfile:
     def testRangedFileRequest(self, file_server, site, site_temp):
         inner_path = self.createBigfile(site)
 
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
         client = FileServer(file_server.ip, 1545)
-        client.sites[site_temp.address] = site_temp
+        client.getSites()[site_temp.address] = site_temp
         site_temp.connection_server = client
         connection = client.getConnection(file_server.ip, 1544)
 
@@ -119,7 +119,7 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Make sure the file and the piecemap in the optional hashfield
         file_info = site.content_manager.getFileInfo(inner_path)
@@ -164,7 +164,7 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Init client server
         client = ConnectionServer(file_server.ip, 1545)
@@ -247,11 +247,11 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Init client server
         site_temp.connection_server = FileServer(file_server.ip, 1545)
-        site_temp.connection_server.sites[site_temp.address] = site_temp
+        site_temp.connection_server.getSites()[site_temp.address] = site_temp
         site_temp.addPeer(file_server.ip, 1544)
 
         # Download site
@@ -277,7 +277,7 @@ class TestBigfile:
     def benchmarkPeerMemory(self, site, file_server):
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         import psutil, os
         meminfo = psutil.Process(os.getpid()).memory_info
@@ -293,9 +293,9 @@ class TestBigfile:
         inner_path = self.createBigfile(site)
 
         server1 = file_server
-        server1.sites[site.address] = site
+        server1.getSites()[site.address] = site
         server2 = FileServer(file_server.ip, 1545)
-        server2.sites[site_temp.address] = site_temp
+        server2.getSites()[site_temp.address] = site_temp
         site_temp.connection_server = server2
 
         # Add file_server as peer to client
@@ -310,9 +310,9 @@ class TestBigfile:
         inner_path = self.createBigfile(site)
 
         server1 = file_server
-        server1.sites[site.address] = site
+        server1.getSites()[site.address] = site
         server2 = FileServer(file_server.ip, 1545)
-        server2.sites[site_temp.address] = site_temp
+        server2.getSites()[site_temp.address] = site_temp
         site_temp.connection_server = server2
 
         # Add file_server as peer to client
@@ -338,9 +338,9 @@ class TestBigfile:
         inner_path = self.createBigfile(site)
 
         server1 = file_server
-        server1.sites[site.address] = site
+        server1.getSites()[site.address] = site
         server2 = FileServer(file_server.ip, 1545)
-        server2.sites[site_temp.address] = site_temp
+        server2.getSites()[site_temp.address] = site_temp
         site_temp.connection_server = server2
         sha512 = site.content_manager.getFileInfo(inner_path)["sha512"]
 
@@ -372,7 +372,7 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Init client server
         client = ConnectionServer(file_server.ip, 1545)
@@ -409,7 +409,7 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Init client server
         client = ConnectionServer(file_server.ip, 1545)
@@ -445,7 +445,7 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Init client server
         client = ConnectionServer(file_server.ip, 1545)
@@ -474,7 +474,7 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Init client server
         client = ConnectionServer(file_server.ip, 1545)
@@ -499,11 +499,11 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Init client server
         site_temp.connection_server = FileServer(file_server.ip, 1545)
-        site_temp.connection_server.sites[site_temp.address] = site_temp
+        site_temp.connection_server.getSites()[site_temp.address] = site_temp
         site_temp.addPeer(file_server.ip, 1544)
 
         # Download site
@@ -555,11 +555,11 @@ class TestBigfile:
 
         # Init source server
         site.connection_server = file_server
-        file_server.sites[site.address] = site
+        file_server.getSites()[site.address] = site
 
         # Init client server
         site_temp.connection_server = FileServer(file_server.ip, 1545)
-        site_temp.connection_server.sites[site_temp.address] = site_temp
+        site_temp.connection_server.getSites()[site_temp.address] = site_temp
         site_temp.addPeer(file_server.ip, 1544)
 
         # Download site

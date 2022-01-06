@@ -71,14 +71,14 @@ class LocalAnnouncer(BroadcastServer.BroadcastServer):
             return {"cmd": "siteListRequest"}
         else:
             # Peer's site list is the same
-            for site in self.server.sites.values():
+            for site in self.server.getSites().values():
                 peer = site.peers.get("%s:%s" % (sender["ip"], sender["port"]))
                 if peer:
                     peer.found("local")
 
     def actionSiteListRequest(self, sender, params):
         back = []
-        sites = list(self.server.sites.values())
+        sites = list(self.server.getSites().values())
 
         # Split adresses to group of 100 to avoid UDP size limit
         site_groups = [sites[i:i + 100] for i in range(0, len(sites), 100)]
@@ -94,7 +94,7 @@ class LocalAnnouncer(BroadcastServer.BroadcastServer):
         peer_sites = set(params["sites"])
         num_found = 0
         added_sites = []
-        for site in self.server.sites.values():
+        for site in self.server.getSites().values():
             if site.address_hash in peer_sites:
                 added = site.addPeer(sender["ip"], sender["port"], source="local")
                 num_found += 1

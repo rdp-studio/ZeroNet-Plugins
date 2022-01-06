@@ -50,7 +50,7 @@ class UiWebsocketPlugin(object):
         global bigfile_sha512_cache
 
         content_db = self.site.content_manager.contents.db
-        site = content_db.sites[row["address"]]
+        site = content_db.getSites()[row["address"]]
         if not site.settings.get("has_bigfile"):
             return False
 
@@ -213,7 +213,7 @@ class UiWebsocketPlugin(object):
         if not self.hasSitePermission(address):
             return {"error": "Forbidden"}
 
-        site = self.server.sites[address]
+        site = self.server.getSites()[address]
         site.content_manager.setPin(inner_path, is_pinned)
 
         return "ok"
@@ -252,7 +252,7 @@ class UiWebsocketPlugin(object):
         if not self.hasSitePermission(address):
             return self.response(to, {"error": "Forbidden"})
 
-        site = self.server.sites[address]
+        site = self.server.getSites()[address]
 
         content_db = site.content_manager.contents.db
         site_id = content_db.site_ids[site.address]
@@ -307,7 +307,7 @@ class UiWebsocketPlugin(object):
         if not self.hasSitePermission(address):
             return self.response(to, {"error": "Forbidden"})
 
-        site = self.server.sites[address]
+        site = self.server.getSites()[address]
 
         self.response(to, site.settings.get("optional_help", {}))
 
@@ -319,7 +319,7 @@ class UiWebsocketPlugin(object):
         if not self.hasSitePermission(address):
             return self.response(to, {"error": "Forbidden"})
 
-        site = self.server.sites[address]
+        site = self.server.getSites()[address]
         content_db = site.content_manager.contents.db
         site_id = content_db.site_ids[address]
 
@@ -356,7 +356,7 @@ class UiWebsocketPlugin(object):
         if not self.hasSitePermission(address):
             return self.response(to, {"error": "Forbidden"})
 
-        site = self.server.sites[address]
+        site = self.server.getSites()[address]
 
         try:
             del site.settings["optional_help"][directory]
@@ -376,7 +376,7 @@ class UiWebsocketPlugin(object):
         if not self.hasSitePermission(address):
             return self.response(to, {"error": "Forbidden"})
 
-        site = self.server.sites[address]
+        site = self.server.getSites()[address]
 
         if value:
             if "ADMIN" in self.site.settings["permissions"]:

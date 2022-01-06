@@ -56,9 +56,9 @@ class ChartDb(Db):
     def getSiteId(self, address):
         if address not in self.sites:
             res = self.execute("INSERT INTO site ?", {"address": address})
-            self.sites[address] = res.lastrowid
+            self.getSites()[address] = res.lastrowid
 
-        return self.sites[address]
+        return self.getSites()[address]
 
     def loadSites(self):
         sites = {}
@@ -74,8 +74,8 @@ class ChartDb(Db):
 
     def deleteSite(self, address):
         if address in self.sites:
-            site_id = self.sites[address]
-            del self.sites[address]
+            site_id = self.getSites()[address]
+            del self.getSites()[address]
             self.execute("DELETE FROM site WHERE ?", {"site_id": site_id})
             self.execute("DELETE FROM data WHERE ?", {"site_id": site_id})
 

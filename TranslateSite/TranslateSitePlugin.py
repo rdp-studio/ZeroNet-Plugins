@@ -24,7 +24,7 @@ class UiRequestPlugin(object):
             kwargs["header_length"] = False
             file_generator = super(UiRequestPlugin, self).actionSiteMedia(path, **kwargs)
             if "__next__" in dir(file_generator):  # File found and generator returned
-                site = self.server.sites.get(path_parts["address"])
+                site = self.server.getSites().get(path_parts["address"])
                 if not site or not site.content_manager.contents.get("content.json"):
                     return file_generator
                 return self.actionPatchFile(site, path_parts["inner_path"], file_generator)

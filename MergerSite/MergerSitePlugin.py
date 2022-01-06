@@ -92,7 +92,7 @@ class UiWebsocketPlugin(object):
     # Delete a merged site
     @flag.no_multiuser
     def actionMergerSiteDelete(self, to, address):
-        site = self.server.sites.get(address)
+        site = self.server.getSites().get(address)
         if not site:
             return self.response(to, {"error": "No site found: %s" % address})
 
@@ -115,7 +115,7 @@ class UiWebsocketPlugin(object):
             if merged_type not in merger_types:
                 continue  # Site not for us
             if query_site_info:
-                site = self.server.sites.get(address)
+                site = self.server.getSites().get(address)
                 ret[address] = self.formatSiteInfo(site, create_user=False)
             else:
                 ret[address] = merged_type
@@ -141,7 +141,7 @@ class UiWebsocketPlugin(object):
                 self.user.setCert(merged_address, merger_cert)
 
             req_self = copy.copy(self)
-            req_self.site = self.server.sites.get(merged_address)  # Change the site to the merged one
+            req_self.site = self.server.getSites().get(merged_address)  # Change the site to the merged one
 
             func = getattr(super(UiWebsocketPlugin, req_self), func_name)
             return func(to, merged_inner_path, *args, **kwargs)
@@ -188,7 +188,7 @@ class UiWebsocketPlugin(object):
         func = getattr(super(UiWebsocketPlugin, self), func_name)
         if inner_path.startswith("merged-"):
             merged_address, merged_inner_path = checkMergerPath(self.site.address, inner_path)
-            merged_site = self.server.sites.get(merged_address)
+            merged_site = self.server.getSites().get(merged_address)
 
             # Set the same cert for merged site
             merger_cert = self.user.getSiteData(self.site.address).get("cert")
@@ -227,7 +227,7 @@ class UiWebsocketPlugin(object):
         for address, merged_type in merged_db.items():
             if merged_type != merger_type:
                 continue
-            site = self.server.sites.get(address)
+            site = self.server.getSites().get(address)
             try:
                 merged_sites.append(site.content_manager.contents.get("content.json").get("title", address))
             except Exception:
@@ -265,7 +265,7 @@ class SiteStoragePlugin(object):
             return
 
         merged_sites = [
-            site_manager.sites[address]
+            site_manager.getSites()[address]
             for address, merged_type in merged_db.items()
             if merged_type in merger_types
         ]
@@ -373,7 +373,7 @@ class SiteManagerPlugin(object):
                 if site.address not in merger_db_new:
                     merger_db_new[site.address] = []
                 merger_db_new[site.address].append(merger_type)
-                site_manager.sites[site.address] = site
+                site_manager.getSites()[site.address] = site
 
             # Update merged to merger
             if merged_type:

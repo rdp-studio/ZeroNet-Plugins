@@ -91,7 +91,7 @@ class ContentDbPlugin(object):
             if not site_address or site_address not in self.sites:
                 self.log.error("Not found site_id: %s" % site_id)
                 continue
-            site = self.sites[site_address]
+            site = self.getSites()[site_address]
             site.settings["size_optional"] = stats["size_optional"]
             site.settings["optional_downloaded"] = stats["optional_downloaded"]
             total += stats["size_optional"]
