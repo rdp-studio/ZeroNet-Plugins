@@ -51,7 +51,7 @@ class UiWebsocketPlugin(object):
     @flag.admin
     def actionChartGetPeerLocations(self, to):
         peers = {}
-        for site in self.server.getSites().values():
+        for site in self.server.sites.values():
             peers.update(site.peers)
         peer_locations = self.getPeerLocations(peers)
         return peer_locations
