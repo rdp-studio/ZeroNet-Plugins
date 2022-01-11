@@ -131,9 +131,9 @@ class FileServerPlugin(object):
             gevent.spawn(self.local_announcer.start)
         return super(FileServerPlugin, self).start(*args, **kwargs)
 
-    def stop(self):
+    def stop(self, ui_websocket=None):
         if self.local_announcer:
-            self.local_announcer.stop()
+            self.local_announcer.stop(ui_websocket=ui_websocket)
         res = super(FileServerPlugin, self).stop()
         return res
 
