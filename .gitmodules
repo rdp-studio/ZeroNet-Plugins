@@ -7,3 +7,6 @@
 [submodule "PeerMessage"]
 	path = PeerMessage
 	url = https://github.com/ZeroNetX/Plugin-PeerMessage.git
+[submodule "NameTRUST"]
+	path = NameTRUST
+	url = https://github.com/rdp-studio/0net-NameTRUST-Resolver.git
